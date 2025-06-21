@@ -9,7 +9,7 @@ import { ApiService, Task, Project, Worker } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-edit.component.html',
-  styleUrl: './task-edit.component.css'
+  styleUrl: './task-edit.component.css',
 })
 export class TaskEditComponent implements OnInit {
   task: Partial<Task> = {};
@@ -52,7 +52,7 @@ export class TaskEditComponent implements OnInit {
         this.loading = false;
         this.errorMessage = 'Could not load project data. Please try again.';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -71,15 +71,15 @@ export class TaskEditComponent implements OnInit {
         this.loading = false;
         this.errorMessage = 'Could not load task data. Please try again.';
         this.showErrorModal = true;
-      }
+      },
     });
   }
-  
+
   loadWorkersForProject(projectId: number) {
     this.loadingWorkers = true;
     this.workers = [];
-    
-    const project = this.projects.find(p => p.id === projectId);
+
+    const project = this.projects.find((p) => p.id === projectId);
     if (project && project.leader_id) {
       this.apiService.getLeader(project.leader_id).subscribe({
         next: (leaderResponse) => {
@@ -89,7 +89,7 @@ export class TaskEditComponent implements OnInit {
         error: (err) => {
           console.error('Error fetching workers for leader:', err);
           this.loadingWorkers = false;
-        }
+        },
       });
     } else {
       this.loadingWorkers = false;
@@ -117,9 +117,10 @@ export class TaskEditComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        this.errorMessage = error.error?.message || 'An error occurred while updating the task';
+        this.errorMessage =
+          error.error?.message || 'An error occurred while updating the task';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -135,4 +136,4 @@ export class TaskEditComponent implements OnInit {
   goBack() {
     this.router.navigate(['/tasks']);
   }
-} 
+}

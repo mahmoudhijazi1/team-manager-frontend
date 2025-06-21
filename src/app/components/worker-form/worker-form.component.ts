@@ -9,14 +9,14 @@ import { ApiService, Leader } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './worker-form.component.html',
-  styleUrl: './worker-form.component.css'
+  styleUrl: './worker-form.component.css',
 })
 export class WorkerFormComponent implements OnInit {
   worker = {
     name: '',
     email: '',
     position: '',
-    leader_id: undefined as number | undefined
+    leader_id: undefined as number | undefined,
   };
 
   leaders: Leader[] = [];
@@ -25,10 +25,7 @@ export class WorkerFormComponent implements OnInit {
   showErrorModal = false;
   errorMessage = '';
 
-  constructor(
-    private apiService: ApiService,
-    private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.loadLeaders();
@@ -43,7 +40,7 @@ export class WorkerFormComponent implements OnInit {
         console.error('Error loading leaders:', error);
         this.errorMessage = 'Could not load leaders. Please try again later.';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -58,9 +55,10 @@ export class WorkerFormComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        this.errorMessage = error.error?.message || 'An error occurred while creating the worker';
+        this.errorMessage =
+          error.error?.message || 'An error occurred while creating the worker';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -87,7 +85,7 @@ export class WorkerFormComponent implements OnInit {
       name: '',
       email: '',
       position: '',
-      leader_id: undefined as number | undefined
+      leader_id: undefined as number | undefined,
     };
   }
-} 
+}

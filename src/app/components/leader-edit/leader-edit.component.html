@@ -2,18 +2,12 @@
   <div class="max-w-xl mx-auto">
     <div class="bg-white rounded-xl shadow-lg p-8">
       <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Leader</h1>
-      
+
       <form (ngSubmit)="onSubmit()" #leaderForm="ngForm" *ngIf="leader">
         <div class="space-y-6">
           <div>
             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              [(ngModel)]="leader.name"
-              required
-              #nameField="ngModel"
+            <input type="text" id="name" name="name" [(ngModel)]="leader.name" required #nameField="ngModel"
               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all duration-300"
               placeholder="Enter leader's full name...">
             <div *ngIf="nameField.invalid && nameField.touched" class="mt-2 text-red-600 text-xs">
@@ -23,14 +17,7 @@
 
           <div>
             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              [(ngModel)]="leader.email"
-              required
-              email
-              #emailField="ngModel"
+            <input type="email" id="email" name="email" [(ngModel)]="leader.email" required email #emailField="ngModel"
               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all duration-300"
               placeholder="Enter leader's email...">
             <div *ngIf="emailField.invalid && emailField.touched" class="mt-2 text-red-600 text-xs">
@@ -41,12 +28,7 @@
 
           <div>
             <label for="team_name" class="block text-sm font-semibold text-gray-700 mb-2">Team Name</label>
-            <input
-              type="text"
-              id="team_name"
-              name="team_name"
-              [(ngModel)]="leader.team_name"
-              required
+            <input type="text" id="team_name" name="team_name" [(ngModel)]="leader.team_name" required
               #teamNameField="ngModel"
               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all duration-300"
               placeholder="Enter team name...">
@@ -57,15 +39,11 @@
         </div>
 
         <div class="flex gap-4 mt-8">
-          <button
-            type="button"
-            (click)="goBack()"
+          <button type="button" (click)="goBack()"
             class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors duration-300 text-sm">
             Cancel
           </button>
-          <button
-            type="submit"
-            [disabled]="!leaderForm.form.valid || submitting"
+          <button type="submit" [disabled]="!leaderForm.form.valid || submitting"
             class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
             <span *ngIf="!submitting">Save Changes</span>
             <span *ngIf="submitting" class="flex items-center justify-center">
@@ -88,8 +66,7 @@
   </div>
 </div>
 
-<div *ngIf="showSuccessModal"
-     class="modal-overlay">
+<div *ngIf="showSuccessModal" class="modal-overlay">
   <div class="modal-content">
     <div class="text-center">
       <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -97,20 +74,18 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
         </svg>
       </div>
-      
+
       <h3 class="text-xl font-bold text-gray-900 mb-4">Leader Updated Successfully!</h3>
       <p class="text-gray-600 mb-8">
         The leader <strong>{{ leader.name }}</strong> has been updated.
       </p>
-      
+
       <div class="flex gap-4">
-        <button 
-          (click)="goToLeaderDetail()"
+        <button (click)="goToLeaderDetail()"
           class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300">
           View Details
         </button>
-        <button 
-          (click)="goToLeadersList()"
+        <button (click)="goToLeadersList()"
           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-300">
           Back to List
         </button>
@@ -119,8 +94,7 @@
   </div>
 </div>
 
-<div *ngIf="showErrorModal"
-     class="modal-overlay">
+<div *ngIf="showErrorModal" class="modal-overlay">
   <div class="modal-content">
     <div class="text-center">
       <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -128,15 +102,14 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </div>
-      
+
       <h3 class="text-xl font-bold text-gray-900 mb-4">Error Updating Leader</h3>
       <p class="text-gray-600 mb-8">{{ errorMessage }}</p>
-      
-      <button 
-        (click)="closeErrorModal()"
+
+      <button (click)="closeErrorModal()"
         class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300">
         Try Again
       </button>
     </div>
   </div>
-</div> 
+</div>

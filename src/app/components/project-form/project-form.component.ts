@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './project-form.component.html',
-  styleUrl: './project-form.component.css'
+  styleUrl: './project-form.component.css',
 })
 export class ProjectFormComponent implements OnInit {
   project = {
     name: '',
     description: '',
     leader_id: undefined as number | undefined,
-    deadline: ''
+    deadline: '',
   };
 
   leaders: Leader[] = [];
@@ -42,7 +42,7 @@ export class ProjectFormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading leaders:', error);
-      }
+      },
     });
   }
 
@@ -58,9 +58,11 @@ export class ProjectFormComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        this.errorMessage = error.error?.message || 'An error occurred while creating the project';
+        this.errorMessage =
+          error.error?.message ||
+          'An error occurred while creating the project';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -87,7 +89,7 @@ export class ProjectFormComponent implements OnInit {
       name: '',
       description: '',
       leader_id: undefined as number | undefined,
-      deadline: ''
+      deadline: '',
     };
   }
 }

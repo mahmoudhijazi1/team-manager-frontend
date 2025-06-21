@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './leaders-list.component.html',
-  styleUrl: './leaders-list.component.css'
+  styleUrl: './leaders-list.component.css',
 })
 export class LeadersListComponent implements OnInit {
   leaders: Leader[] = [];
@@ -47,7 +47,7 @@ export class LeadersListComponent implements OnInit {
   getVisiblePages(): number[] {
     const pages: number[] = [];
     const maxVisible = 5;
-    
+
     if (this.totalPages <= maxVisible) {
       for (let i = 1; i <= this.totalPages; i++) {
         pages.push(i);
@@ -55,25 +55,22 @@ export class LeadersListComponent implements OnInit {
     } else {
       let start = Math.max(1, this.currentPage - 2);
       let end = Math.min(this.totalPages, start + maxVisible - 1);
-      
+
       if (end === this.totalPages) {
         start = Math.max(1, end - maxVisible + 1);
       }
-      
+
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
     }
-    
+
     return pages;
   }
 
   leadersOriginal: Leader[] = [];
 
-  constructor(
-    private apiService: ApiService,
-    private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.loadLeaders();
@@ -91,13 +88,14 @@ export class LeadersListComponent implements OnInit {
       error: (error) => {
         console.error('Error loading leaders:', error);
         this.loading = false;
-      }
+      },
     });
   }
 
   getInitials(name: string): string {
-    return name.split(' ')
-      .map(n => n[0])
+    return name
+      .split(' ')
+      .map((n) => n[0])
       .join('')
       .toUpperCase()
       .substring(0, 2);
@@ -116,17 +114,19 @@ export class LeadersListComponent implements OnInit {
 
   confirmDelete() {
     if (!this.selectedLeader) return;
-    
+
     this.deleting = true;
     this.apiService.deleteLeader(this.selectedLeader.id).subscribe({
       next: () => {
-        this.leaders = this.leaders.filter(l => l.id !== this.selectedLeader?.id);
+        this.leaders = this.leaders.filter(
+          (l) => l.id !== this.selectedLeader?.id
+        );
         this.closeDeleteModal();
       },
       error: (error) => {
         console.error('Error deleting leader:', error);
         this.deleting = false;
-      }
+      },
     });
   }
 
@@ -139,9 +139,10 @@ export class LeadersListComponent implements OnInit {
     if (!term) {
       this.leaders = this.leadersOriginal;
     } else {
-      this.leaders = this.leadersOriginal.filter(leader =>
-        (leader.name && leader.name.toLowerCase().includes(term)) ||
-        (leader.email && leader.email.toLowerCase().includes(term))
+      this.leaders = this.leadersOriginal.filter(
+        (leader) =>
+          (leader.name && leader.name.toLowerCase().includes(term)) ||
+          (leader.email && leader.email.toLowerCase().includes(term))
       );
     }
     this.currentPage = 1;

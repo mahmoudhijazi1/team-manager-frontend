@@ -3,13 +3,13 @@ import { Task } from '../services/api.service';
 
 @Pipe({
   name: 'taskStatusFilter',
-  standalone: true
+  standalone: true,
 })
 export class TaskStatusFilterPipe implements PipeTransform {
   transform(tasks: Task[], status: string): Task[] {
     if (!tasks || !status || status === 'all') {
       return tasks;
     }
-    return tasks.filter(task => task.status === status);
+    return tasks.filter((task) => task.status === status);
   }
 }

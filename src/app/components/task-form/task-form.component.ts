@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.css'
+  styleUrl: './task-form.component.css',
 })
 export class TaskFormComponent implements OnInit {
   task = {
@@ -17,7 +17,7 @@ export class TaskFormComponent implements OnInit {
     project_id: undefined as number | undefined,
     assigned_to: undefined as number | undefined,
     deadline: '',
-    status: 'pending' as 'pending' | 'in-progress' | 'completed'
+    status: 'pending' as 'pending' | 'in-progress' | 'completed',
   };
 
   projects: Project[] = [];
@@ -53,7 +53,7 @@ export class TaskFormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading projects:', error);
-      }
+      },
     });
   }
 
@@ -61,14 +61,14 @@ export class TaskFormComponent implements OnInit {
     const projectId = (event.target as HTMLSelectElement).value;
     this.task.assigned_to = undefined;
     this.workers = [];
-    
+
     if (!projectId) {
       return;
     }
 
     this.loadingWorkers = true;
-    const selectedProject = this.projects.find(p => p.id === +projectId);
-    
+    const selectedProject = this.projects.find((p) => p.id === +projectId);
+
     if (selectedProject && selectedProject.leader_id) {
       this.apiService.getLeader(selectedProject.leader_id).subscribe({
         next: (response) => {
@@ -78,7 +78,7 @@ export class TaskFormComponent implements OnInit {
         error: (err) => {
           console.error('Error fetching workers', err);
           this.loadingWorkers = false;
-        }
+        },
       });
     } else {
       this.loadingWorkers = false;
@@ -96,9 +96,10 @@ export class TaskFormComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        this.errorMessage = error.error?.message || 'An error occurred while creating the task';
+        this.errorMessage =
+          error.error?.message || 'An error occurred while creating the task';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -126,7 +127,7 @@ export class TaskFormComponent implements OnInit {
       project_id: undefined as number | undefined,
       assigned_to: undefined as number | undefined,
       deadline: '',
-      status: 'pending' as 'pending' | 'in-progress' | 'completed'
+      status: 'pending' as 'pending' | 'in-progress' | 'completed',
     };
     this.setMinDate();
   }

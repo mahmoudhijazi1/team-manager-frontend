@@ -8,7 +8,7 @@ import { ApiService, Project } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './project-detail.component.html',
-  styleUrl: './project-detail.component.css'
+  styleUrl: './project-detail.component.css',
 })
 export class ProjectDetailComponent implements OnInit {
   project: Project | null = null;
@@ -43,13 +43,14 @@ export class ProjectDetailComponent implements OnInit {
         console.error('Error loading project:', error);
         this.loading = false;
         this.router.navigate(['/projects']);
-      }
+      },
     });
   }
 
   getInitials(name: string): string {
-    return name.split(' ')
-      .map(n => n[0])
+    return name
+      .split(' ')
+      .map((n) => n[0])
       .join('')
       .toUpperCase()
       .substring(0, 2);
@@ -135,7 +136,7 @@ export class ProjectDetailComponent implements OnInit {
 
   confirmDelete() {
     if (!this.project) return;
-    
+
     this.deleting = true;
     this.apiService.deleteProject(this.project.id).subscribe({
       next: () => {
@@ -145,11 +146,11 @@ export class ProjectDetailComponent implements OnInit {
       error: (error) => {
         console.error('Error deleting project:', error);
         this.deleting = false;
-      }
+      },
     });
   }
 
   goBack() {
     this.router.navigate(['/projects']);
   }
-} 
+}

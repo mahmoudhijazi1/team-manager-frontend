@@ -9,13 +9,13 @@ import { ApiService, Leader } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './leader-edit.component.html',
-  styleUrl: './leader-edit.component.css'
+  styleUrl: './leader-edit.component.css',
 })
 export class LeaderEditComponent implements OnInit {
   leader: Partial<Leader> = {
     name: '',
     email: '',
-    team_name: ''
+    team_name: '',
   };
 
   leaderId: number | null = null;
@@ -50,7 +50,7 @@ export class LeaderEditComponent implements OnInit {
         this.leader = {
           name: response.data.name,
           email: response.data.email,
-          team_name: response.data.team_name
+          team_name: response.data.team_name,
         };
         this.loading = false;
       },
@@ -59,7 +59,7 @@ export class LeaderEditComponent implements OnInit {
         this.loading = false;
         this.errorMessage = 'Could not load leader data. Please try again.';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -74,9 +74,10 @@ export class LeaderEditComponent implements OnInit {
       },
       error: (error) => {
         this.submitting = false;
-        this.errorMessage = error.error?.message || 'An error occurred while updating the leader';
+        this.errorMessage =
+          error.error?.message || 'An error occurred while updating the leader';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -103,4 +104,4 @@ export class LeaderEditComponent implements OnInit {
       this.router.navigate(['/leaders']);
     }
   }
-} 
+}

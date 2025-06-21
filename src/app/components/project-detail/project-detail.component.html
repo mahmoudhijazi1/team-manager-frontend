@@ -3,8 +3,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between mb-8">
       <div class="flex items-center">
-        <button 
-          (click)="goBack()"
+        <button (click)="goBack()"
           class="mr-6 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-300">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -13,13 +12,11 @@
         <h1 class="text-3xl font-bold text-gray-900">Project Details</h1>
       </div>
       <div class="flex gap-4">
-        <button 
-          (click)="editProject()"
+        <button (click)="editProject()"
           class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300">
           Edit Project
         </button>
-        <button 
-          (click)="openDeleteModal()"
+        <button (click)="openDeleteModal()"
           class="bg-red-100 hover:bg-red-200 text-red-700 px-6 py-3 rounded-lg font-semibold transition-colors duration-300">
           Delete Project
         </button>
@@ -42,7 +39,8 @@
             <div>
               <div class="text-sm text-gray-600 mb-2">Project Leader</div>
               <div class="flex items-center">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold mr-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold mr-3">
                   {{ getInitials(project.leader?.name || 'N/A') }}
                 </div>
                 <span class="font-semibold text-gray-900">{{ project.leader?.name || 'Unassigned' }}</span>
@@ -80,11 +78,12 @@
               <p class="text-gray-500">This project doesn't have any tasks assigned yet.</p>
             </div>
             <div *ngIf="project.tasks && project.tasks.length > 0" class="space-y-4">
-              <div *ngFor="let task of project.tasks" 
-                   class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+              <div *ngFor="let task of project.tasks"
+                class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-300">
                 <div class="flex justify-between items-start mb-2">
                   <h4 class="font-semibold text-gray-900">{{ task.title }}</h4>
-                  <div [class]="getTaskStatusBadgeClass(task.status)" class="px-3 py-1 rounded-full text-xs font-semibold">
+                  <div [class]="getTaskStatusBadgeClass(task.status)"
+                    class="px-3 py-1 rounded-full text-xs font-semibold">
                     {{ getTaskStatusLabel(task.status) }}
                   </div>
                 </div>
@@ -107,33 +106,29 @@
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div *ngIf="showDeleteModal" 
-     class="modal-overlay"
-     (click)="closeDeleteModal()">
-  <div class="modal-content"
-       (click)="$event.stopPropagation()">
+<div *ngIf="showDeleteModal" class="modal-overlay" (click)="closeDeleteModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="text-center">
       <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
         <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+          </path>
         </svg>
       </div>
-      
+
       <h3 class="text-xl font-bold text-gray-900 mb-4">Delete Project</h3>
       <p class="text-gray-600 mb-8">
-        Are you sure you want to delete <strong>{{ project?.name }}</strong>? 
+        Are you sure you want to delete <strong>{{ project?.name }}</strong>?
         This action cannot be undone and will affect all associated tasks.
       </p>
-      
+
       <div class="flex gap-4">
-        <button 
-          (click)="closeDeleteModal()"
+        <button (click)="closeDeleteModal()"
           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-300">
           Cancel
         </button>
-        <button 
-          (click)="confirmDelete()"
-          [disabled]="deleting"
+        <button (click)="confirmDelete()" [disabled]="deleting"
           class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 disabled:opacity-50">
           <span *ngIf="!deleting">Delete</span>
           <span *ngIf="deleting" class="flex items-center justify-center">
@@ -144,4 +139,4 @@
       </div>
     </div>
   </div>
-</div> 
+</div>

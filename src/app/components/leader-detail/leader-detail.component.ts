@@ -8,7 +8,7 @@ import { ApiService, Leader } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './leader-detail.component.html',
-  styleUrl: './leader-detail.component.css'
+  styleUrl: './leader-detail.component.css',
 })
 export class LeaderDetailComponent implements OnInit {
   leader: Leader | null = null;
@@ -44,13 +44,14 @@ export class LeaderDetailComponent implements OnInit {
         this.loading = false;
         // Navigate back if leader not found
         this.router.navigate(['/leaders']);
-      }
+      },
     });
   }
 
   getInitials(name: string): string {
-    return name.split(' ')
-      .map(n => n[0])
+    return name
+      .split(' ')
+      .map((n) => n[0])
       .join('')
       .toUpperCase()
       .substring(0, 2);
@@ -109,7 +110,7 @@ export class LeaderDetailComponent implements OnInit {
 
   confirmDelete() {
     if (!this.leader) return;
-    
+
     this.deleting = true;
     this.apiService.deleteLeader(this.leader.id).subscribe({
       next: () => {
@@ -119,11 +120,11 @@ export class LeaderDetailComponent implements OnInit {
       error: (error) => {
         console.error('Error deleting leader:', error);
         this.deleting = false;
-      }
+      },
     });
   }
 
   goBack() {
     this.router.navigate(['/leaders']);
   }
-} 
+}

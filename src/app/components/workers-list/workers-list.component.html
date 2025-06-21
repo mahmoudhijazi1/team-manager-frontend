@@ -1,8 +1,7 @@
 <div class="p-4 sm:p-8">
   <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-6 sm:mb-8">
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Workers</h1>
-    <button 
-      routerLink="/create-worker"
+    <button routerLink="/create-worker"
       class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors duration-300 text-sm sm:text-base">
       Add Worker
     </button>
@@ -12,21 +11,17 @@
     <div class="flex-1 relative search-input-container">
       <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none search-icon">
         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
       </div>
-      <input 
-        type="text" 
-        [(ngModel)]="searchTerm"
-        (input)="filterWorkers()"
+      <input type="text" [(ngModel)]="searchTerm" (input)="filterWorkers()"
         placeholder="Search workers by name or email..."
         class="w-full pl-12 pr-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base">
     </div>
-    
+
     <div class="relative">
-      <select 
-        [(ngModel)]="selectedPosition"
-        (change)="filterWorkers()"
+      <select [(ngModel)]="selectedPosition" (change)="filterWorkers()"
         class="w-full sm:w-auto appearance-none bg-white border border-gray-300 rounded-lg px-4 sm:px-6 py-3 sm:py-4 pr-10 sm:pr-12 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         <option value="">All Positions</option>
         <option *ngFor="let position of uniquePositions" [value]="position">{{ position }}</option>
@@ -48,14 +43,16 @@
     <p class="text-gray-500 mt-2 text-sm sm:text-base">Try adjusting your search or filter criteria</p>
   </div>
 
-  <div *ngIf="!loading && filteredWorkers.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-    <div *ngFor="let worker of pagedWorkers" 
-         class="bg-white rounded-xl shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 min-h-[350px] sm:min-h-[400px] p-4 sm:p-6 lg:p-8 border border-gray-100">
-      
+  <div *ngIf="!loading && filteredWorkers.length > 0"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+    <div *ngFor="let worker of pagedWorkers"
+      class="bg-white rounded-xl shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 min-h-[350px] sm:min-h-[400px] p-4 sm:p-6 lg:p-8 border border-gray-100">
+
       <div class="flex flex-col h-full">
         <div class="flex items-start justify-between mb-4 sm:mb-6">
           <div class="flex items-center">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center text-white text-sm sm:text-lg font-bold">
+            <div
+              class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center text-white text-sm sm:text-lg font-bold">
               {{ getInitials(worker.name) }}
             </div>
             <div class="ml-3 sm:ml-4">
@@ -66,7 +63,8 @@
         </div>
 
         <div class="mb-4 sm:mb-6">
-          <div class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold">
+          <div
+            class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold">
             {{ worker.position }}
           </div>
         </div>
@@ -85,13 +83,11 @@
 
         <div class="flex-1 flex flex-col justify-end">
           <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <button 
-              (click)="viewWorkerTasks(worker)"
+            <button (click)="viewWorkerTasks(worker)"
               class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 text-sm sm:text-base">
               View Tasks
             </button>
-            <button 
-              (click)="openDeleteModal(worker)"
+            <button (click)="openDeleteModal(worker)"
               class="bg-red-100 hover:bg-red-200 text-red-700 px-3 sm:px-4 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 text-sm sm:text-base">
               Delete
             </button>
@@ -103,58 +99,59 @@
 
   <div *ngIf="!loading && filteredWorkers.length > 0 && totalPages > 1" class="flex justify-center items-center mt-6">
     <div class="flex flex-wrap justify-center items-center gap-1 sm:gap-2 max-w-full">
-      <button (click)="prevPage()" [disabled]="currentPage === 1" class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-50 text-sm sm:text-base min-w-[40px] sm:min-w-[48px]">Prev</button>
-      
+      <button (click)="prevPage()" [disabled]="currentPage === 1"
+        class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-50 text-sm sm:text-base min-w-[40px] sm:min-w-[48px]">Prev</button>
+
       <button *ngIf="currentPage > 3" (click)="goToPage(1)"
-          class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm sm:text-base min-w-[32px] sm:min-w-[40px]">
-          1
+        class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm sm:text-base min-w-[32px] sm:min-w-[40px]">
+        1
       </button>
-      
+
       <span *ngIf="currentPage > 4" class="px-1 sm:px-2 text-gray-500 text-sm sm:text-base">...</span>
-      
+
       <ng-container *ngFor="let page of getVisiblePages(); let i = index">
-        <button (click)="goToPage(page)" [class]="'px-2 sm:px-3 py-1 sm:py-2 rounded text-sm sm:text-base min-w-[32px] sm:min-w-[40px] ' + (currentPage === page ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')">{{ page }}</button>
+        <button (click)="goToPage(page)"
+          [class]="'px-2 sm:px-3 py-1 sm:py-2 rounded text-sm sm:text-base min-w-[32px] sm:min-w-[40px] ' + (currentPage === page ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')">{{
+          page }}</button>
       </ng-container>
-      
+
       <span *ngIf="currentPage < totalPages - 3" class="px-1 sm:px-2 text-gray-500 text-sm sm:text-base">...</span>
-      
+
       <button *ngIf="currentPage < totalPages - 2" (click)="goToPage(totalPages)"
-          class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm sm:text-base min-w-[32px] sm:min-w-[40px]">
-          {{ totalPages }}
+        class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 text-sm sm:text-base min-w-[32px] sm:min-w-[40px]">
+        {{ totalPages }}
       </button>
-      
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-50 text-sm sm:text-base min-w-[40px] sm:min-w-[48px]">Next</button>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+        class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-50 text-sm sm:text-base min-w-[40px] sm:min-w-[48px]">Next</button>
     </div>
   </div>
 </div>
 
-<div *ngIf="showDeleteModal" 
-     class="modal-overlay"
-     (click)="closeDeleteModal()">
-  <div class="modal-content"
-       (click)="$event.stopPropagation()">
+<div *ngIf="showDeleteModal" class="modal-overlay" (click)="closeDeleteModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="text-center">
-      <div class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+      <div
+        class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
         <svg class="w-6 h-6 sm:w-8 sm:h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+          </path>
         </svg>
       </div>
-      
+
       <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Delete Worker</h3>
       <p class="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
-        Are you sure you want to delete <strong>{{ selectedWorker?.name }}</strong>? 
+        Are you sure you want to delete <strong>{{ selectedWorker?.name }}</strong>?
         This action cannot be undone and will affect their assigned tasks.
       </p>
-      
+
       <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-        <button 
-          (click)="closeDeleteModal()"
+        <button (click)="closeDeleteModal()"
           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 text-sm sm:text-base">
           Cancel
         </button>
-        <button 
-          (click)="confirmDelete()"
-          [disabled]="deleting"
+        <button (click)="confirmDelete()" [disabled]="deleting"
           class="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 disabled:opacity-50 text-sm sm:text-base">
           <span *ngIf="!deleting">Delete</span>
           <span *ngIf="deleting" class="flex items-center justify-center">

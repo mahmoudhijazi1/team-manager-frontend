@@ -10,7 +10,7 @@ import { TaskStatusFilterPipe } from '../../pipes/task-status-filter.pipe';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, TaskStatusFilterPipe],
   templateUrl: './tasks-list.component.html',
-  styleUrl: './tasks-list.component.css'
+  styleUrl: './tasks-list.component.css',
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
@@ -29,21 +29,32 @@ export class TasksListComponent implements OnInit {
 
   get filteredTasks(): Task[] {
     let filtered = this.tasks;
-    
+
     if (this.searchTerm.trim()) {
-      filtered = filtered.filter(task =>
-        (task.title && task.title.toLowerCase().includes(this.searchTerm.trim().toLowerCase())) ||
-        (task.project?.name && task.project.name.toLowerCase().includes(this.searchTerm.trim().toLowerCase())) ||
-        (task.worker?.name && task.worker.name.toLowerCase().includes(this.searchTerm.trim().toLowerCase()))
+      filtered = filtered.filter(
+        (task) =>
+          (task.title &&
+            task.title
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase())) ||
+          (task.project?.name &&
+            task.project.name
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase())) ||
+          (task.worker?.name &&
+            task.worker.name
+              .toLowerCase()
+              .includes(this.searchTerm.trim().toLowerCase()))
       );
     }
-    
+
     return filtered;
   }
 
   get totalPages(): number {
-    const filteredByStatus = this.filteredTasks.filter(task => 
-      this.selectedStatus === 'all' || task.status === this.selectedStatus
+    const filteredByStatus = this.filteredTasks.filter(
+      (task) =>
+        this.selectedStatus === 'all' || task.status === this.selectedStatus
     );
     return Math.ceil(filteredByStatus.length / this.pageSize) || 1;
   }
@@ -63,7 +74,7 @@ export class TasksListComponent implements OnInit {
   getVisiblePages(): number[] {
     const pages: number[] = [];
     const maxVisible = 5; // Show max 5 page numbers
-    
+
     if (this.totalPages <= maxVisible) {
       // If total pages is small, show all pages
       for (let i = 1; i <= this.totalPages; i++) {
@@ -73,17 +84,17 @@ export class TasksListComponent implements OnInit {
       // Show pages around current page
       let start = Math.max(1, this.currentPage - 2);
       let end = Math.min(this.totalPages, start + maxVisible - 1);
-      
+
       // Adjust start if we're near the end
       if (end === this.totalPages) {
         start = Math.max(1, end - maxVisible + 1);
       }
-      
+
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
     }
-    
+
     return pages;
   }
 
@@ -91,7 +102,7 @@ export class TasksListComponent implements OnInit {
     { value: 'all', label: 'All Tasks' },
     { value: 'pending', label: 'Pending' },
     { value: 'in-progress', label: 'In Progress' },
-    { value: 'completed', label: 'Completed' }
+    { value: 'completed', label: 'Completed' },
   ];
 
   constructor(
@@ -101,7 +112,7 @@ export class TasksListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.workerId = id ? +id : null;
       this.loadTasks();
@@ -114,7 +125,9 @@ export class TasksListComponent implements OnInit {
       next: (response) => {
         let allTasks = response.data;
         if (this.workerId) {
-          allTasks = allTasks.filter((task: any) => task.assigned_to === this.workerId);
+          allTasks = allTasks.filter(
+            (task: any) => task.assigned_to === this.workerId
+          );
         }
         this.tasks = allTasks;
         this.currentPage = 1;
@@ -123,7 +136,7 @@ export class TasksListComponent implements OnInit {
       error: (error) => {
         console.error('Error loading tasks:', error);
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -132,7 +145,8 @@ export class TasksListComponent implements OnInit {
   }
 
   getStatusButtonClass(status: string): string {
-    const baseClass = 'px-6 py-3 rounded-lg font-medium transition-all duration-300';
+    const baseClass =
+      'px-6 py-3 rounded-lg font-medium transition-all duration-300';
     if (status === this.selectedStatus) {
       return `${baseClass} bg-blue-600 text-white shadow-lg`;
     }
@@ -141,18 +155,21 @@ export class TasksListComponent implements OnInit {
 
   getStatusBadgeClass(status: string): string {
     const statusClasses = {
-      'pending': 'bg-yellow-100 text-yellow-800',
+      pending: 'bg-yellow-100 text-yellow-800',
       'in-progress': 'bg-blue-100 text-blue-800',
-      'completed': 'bg-green-100 text-green-800'
+      completed: 'bg-green-100 text-green-800',
     };
-    return statusClasses[status as keyof typeof statusClasses] || 'bg-gray-100 text-gray-800';
+    return (
+      statusClasses[status as keyof typeof statusClasses] ||
+      'bg-gray-100 text-gray-800'
+    );
   }
 
   getStatusLabel(status: string): string {
     const statusLabels = {
-      'pending': 'Pending',
+      pending: 'Pending',
       'in-progress': 'In Progress',
-      'completed': 'Completed'
+      completed: 'Completed',
     };
     return statusLabels[status as keyof typeof statusLabels] || status;
   }
@@ -173,16 +190,17 @@ export class TasksListComponent implements OnInit {
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
   }
 
   getInitials(name: string): string {
-    return name.split(' ')
-      .map(n => n[0])
+    return name
+      .split(' ')
+      .map((n) => n[0])
       .join('')
       .toUpperCase()
       .substring(0, 2);
@@ -195,7 +213,7 @@ export class TasksListComponent implements OnInit {
     this.updating = true;
     this.apiService.updateTask(task.id, { status: newStatus }).subscribe({
       next: (response) => {
-        const index = this.tasks.findIndex(t => t.id === task.id);
+        const index = this.tasks.findIndex((t) => t.id === task.id);
         if (index !== -1) {
           this.tasks[index] = response.data;
         }
@@ -205,7 +223,7 @@ export class TasksListComponent implements OnInit {
         console.error('Error updating task status:', error);
         event.target.value = task.status;
         this.updating = false;
-      }
+      },
     });
   }
 
@@ -222,17 +240,17 @@ export class TasksListComponent implements OnInit {
 
   confirmDelete() {
     if (!this.selectedTask) return;
-    
+
     this.deleting = true;
     this.apiService.deleteTask(this.selectedTask.id).subscribe({
       next: () => {
-        this.tasks = this.tasks.filter(t => t.id !== this.selectedTask?.id);
+        this.tasks = this.tasks.filter((t) => t.id !== this.selectedTask?.id);
         this.closeDeleteModal();
       },
       error: (error) => {
         console.error('Error deleting task:', error);
         this.deleting = false;
-      }
+      },
     });
   }
 

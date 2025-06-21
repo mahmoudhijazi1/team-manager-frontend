@@ -2,18 +2,12 @@
   <div class="max-w-xl mx-auto">
     <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8">
       <h1 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Create New Task</h1>
-      
+
       <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
         <div class="space-y-4 sm:space-y-6">
           <div>
             <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Task Title</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              [(ngModel)]="task.title"
-              required
-              #titleField="ngModel"
+            <input type="text" id="title" name="title" [(ngModel)]="task.title" required #titleField="ngModel"
               class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base transition-all duration-300"
               placeholder="Enter task title...">
             <div *ngIf="titleField.invalid && titleField.touched" class="mt-2 text-red-600 text-xs sm:text-sm">
@@ -23,14 +17,8 @@
 
           <div>
             <label for="deadline" class="block text-sm font-semibold text-gray-700 mb-2">Deadline</label>
-            <input
-              type="date"
-              id="deadline"
-              name="deadline"
-              [ngModel]="task.deadline | date:'yyyy-MM-dd'"
-              (ngModelChange)="task.deadline = $event"
-              required
-              #deadlineField="ngModel"
+            <input type="date" id="deadline" name="deadline" [ngModel]="task.deadline | date:'yyyy-MM-dd'"
+              (ngModelChange)="task.deadline = $event" required #deadlineField="ngModel"
               class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base transition-all duration-300">
             <div *ngIf="deadlineField.invalid && deadlineField.touched" class="mt-2 text-red-600 text-xs sm:text-sm">
               Deadline is required
@@ -40,12 +28,7 @@
           <div>
             <label for="project" class="block text-sm font-semibold text-gray-700 mb-2">Assign to Project</label>
             <div class="relative">
-              <select
-                id="project"
-                name="project_id"
-                [(ngModel)]="task.project_id"
-                required
-                #projectField="ngModel"
+              <select id="project" name="project_id" [(ngModel)]="task.project_id" required #projectField="ngModel"
                 (change)="onProjectChange($event)"
                 class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base appearance-none pr-10 sm:pr-12 transition-all duration-300">
                 <option [ngValue]="undefined" disabled>Select a project...</option>
@@ -67,12 +50,7 @@
           <div>
             <label for="worker" class="block text-sm font-semibold text-gray-700 mb-2">Assign to Worker</label>
             <div class="relative">
-              <select
-                id="worker"
-                name="assigned_to"
-                [(ngModel)]="task.assigned_to"
-                required
-                #workerField="ngModel"
+              <select id="worker" name="assigned_to" [(ngModel)]="task.assigned_to" required #workerField="ngModel"
                 [disabled]="!workers.length"
                 class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base appearance-none pr-10 sm:pr-12 transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed">
                 <option [ngValue]="undefined" disabled>Select a worker...</option>
@@ -89,7 +67,8 @@
             <div *ngIf="workerField.invalid && workerField.touched" class="mt-2 text-red-600 text-xs sm:text-sm">
               Please assign a worker
             </div>
-            <div *ngIf="task.project_id && !workers.length && !loadingWorkers" class="mt-2 text-yellow-600 text-xs sm:text-sm">
+            <div *ngIf="task.project_id && !workers.length && !loadingWorkers"
+              class="mt-2 text-yellow-600 text-xs sm:text-sm">
               The selected project leader has no workers assigned.
             </div>
           </div>
@@ -97,12 +76,7 @@
           <div>
             <label for="status" class="block text-sm font-semibold text-gray-700 mb-2">Task Status</label>
             <div class="relative">
-              <select
-                id="status"
-                name="status"
-                [(ngModel)]="task.status"
-                required
-                #statusField="ngModel"
+              <select id="status" name="status" [(ngModel)]="task.status" required #statusField="ngModel"
                 class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base appearance-none pr-10 sm:pr-12 transition-all duration-300">
                 <option value="pending">Pending</option>
                 <option value="in-progress">In Progress</option>
@@ -119,17 +93,13 @@
             </div>
           </div>
         </div>
-        
+
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
-          <button
-            type="button"
-            (click)="goBack()"
+          <button type="button" (click)="goBack()"
             class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-colors duration-300 text-sm sm:text-base">
             Cancel
           </button>
-          <button
-            type="submit"
-            [disabled]="!taskForm.form.valid || submitting"
+          <button type="submit" [disabled]="!taskForm.form.valid || submitting"
             class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base">
             <span *ngIf="!submitting">Create Task</span>
             <span *ngIf="submitting" class="flex items-center justify-center">
@@ -143,29 +113,27 @@
   </div>
 </div>
 
-<div *ngIf="showSuccessModal"
-     class="modal-overlay">
+<div *ngIf="showSuccessModal" class="modal-overlay">
   <div class="modal-content">
     <div class="text-center">
-      <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+      <div
+        class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
         <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
         </svg>
       </div>
-      
+
       <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Task Created Successfully!</h3>
       <p class="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
         Your task <strong>{{ task.title }}</strong> has been created and assigned.
       </p>
-      
+
       <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-        <button 
-          (click)="createAnother()"
+        <button (click)="createAnother()"
           class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 text-sm sm:text-base">
           Create Another
         </button>
-        <button 
-          (click)="goToTasksList()"
+        <button (click)="goToTasksList()"
           class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 text-sm sm:text-base">
           View Tasks
         </button>
@@ -174,21 +142,20 @@
   </div>
 </div>
 
-<div *ngIf="showErrorModal"
-     class="modal-overlay">
+<div *ngIf="showErrorModal" class="modal-overlay">
   <div class="modal-content">
     <div class="text-center">
-      <div class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+      <div
+        class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
         <svg class="w-6 h-6 sm:w-8 sm:h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </div>
-      
+
       <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Error Creating Task</h3>
       <p class="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">{{ errorMessage }}</p>
-      
-      <button 
-        (click)="closeErrorModal()"
+
+      <button (click)="closeErrorModal()"
         class="w-full bg-red-600 hover:bg-red-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 text-sm sm:text-base">
         Try Again
       </button>

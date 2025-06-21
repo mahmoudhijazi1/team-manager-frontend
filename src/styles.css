@@ -93,38 +93,42 @@ body {
 /* Mobile-specific improvements */
 @media (max-width: 640px) {
   /* Ensure minimum touch target size */
-  button, a, input, select, textarea {
+  button,
+  a,
+  input,
+  select,
+  textarea {
     min-height: 44px;
   }
-  
+
   /* Improve text readability on mobile */
   body {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
   }
-  
+
   /* Mobile modal adjustments */
   .modal-overlay {
     padding: 0.5rem;
   }
-  
+
   .modal-content {
     padding: 1rem;
     margin: 0.5rem;
     max-height: calc(100vh - 1rem);
   }
-  
+
   /* Mobile search input optimizations */
   .search-input-container {
     position: relative;
   }
-  
+
   .search-input-container input {
     padding-left: 3rem !important;
     padding-right: 1rem !important;
     font-size: 16px; /* Prevents zoom on iOS */
   }
-  
+
   .search-input-container .search-icon {
     position: absolute;
     left: 1rem;
@@ -144,18 +148,18 @@ body {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
   }
-  
+
   .pagination-container::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
   }
-  
+
   /* Ensure buttons don't get too small on mobile */
   .pagination-button {
     min-width: 44px !important;
     min-height: 44px !important;
     touch-action: manipulation;
   }
-  
+
   /* Prevent text wrapping in pagination */
   .pagination-text {
     white-space: nowrap;
@@ -247,7 +251,7 @@ textarea:focus:-moz-placeholder {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Ensure form elements are properly sized */
   input[type="text"],
   input[type="email"],
@@ -306,7 +310,7 @@ textarea:focus:-moz-placeholder {
     max-height: calc(100vh - 2rem);
     overflow-y: auto;
   }
-  
+
   /* Ensure modals don't cause horizontal scroll */
   .modal {
     padding: 0 1rem;
@@ -319,13 +323,13 @@ textarea:focus:-moz-placeholder {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Ensure table cells don't wrap unnecessarily */
   .table-cell {
     white-space: nowrap;
     min-width: 100px;
   }
-  
+
   /* Allow some cells to wrap when needed */
   .table-cell-wrap {
     white-space: normal;

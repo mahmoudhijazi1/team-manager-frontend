@@ -109,11 +109,8 @@
     </div>
 </div>
 
-<div *ngIf="showDeleteModal"
-    class="modal-overlay"
-    (click)="closeDeleteModal()">
-    <div class="modal-content"
-        (click)="$event.stopPropagation()">
+<div *ngIf="showDeleteModal" class="modal-overlay" (click)="closeDeleteModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
         <div class="text-center">
             <div
                 class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">

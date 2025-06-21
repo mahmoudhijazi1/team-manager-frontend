@@ -9,13 +9,13 @@ import { ApiService } from '../../services/api.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './leader-form.component.html',
-  styleUrl: './leader-form.component.css'
+  styleUrl: './leader-form.component.css',
 })
 export class LeaderFormComponent {
   leader = {
     name: '',
     email: '',
-    team_name: ''
+    team_name: '',
   };
 
   submitting = false;
@@ -23,10 +23,7 @@ export class LeaderFormComponent {
   showErrorModal = false;
   errorMessage = '';
 
-  constructor(
-    private apiService: ApiService,
-    private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   onSubmit() {
     if (this.submitting) return;
@@ -39,9 +36,10 @@ export class LeaderFormComponent {
       },
       error: (error) => {
         this.submitting = false;
-        this.errorMessage = error.error?.message || 'An error occurred while creating the leader';
+        this.errorMessage =
+          error.error?.message || 'An error occurred while creating the leader';
         this.showErrorModal = true;
-      }
+      },
     });
   }
 
@@ -67,7 +65,7 @@ export class LeaderFormComponent {
     this.leader = {
       name: '',
       email: '',
-      team_name: ''
+      team_name: '',
     };
   }
-} 
+}
