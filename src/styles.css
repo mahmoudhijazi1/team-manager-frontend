@@ -1,6 +1,66 @@
 @import "tailwindcss";
 
+/* Modal Styles - Global */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: modalFadeIn 0.2s ease-out;
+}
 
+.modal-content {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 28rem;
+  width: 100%;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: modalSlideIn 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Ensure modal covers entire viewport */
+.modal-overlay {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
 
 /* Fix scrollbar width shift */
 html {
@@ -41,6 +101,37 @@ body {
   body {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+  }
+  
+  /* Mobile modal adjustments */
+  .modal-overlay {
+    padding: 0.5rem;
+  }
+  
+  .modal-content {
+    padding: 1rem;
+    margin: 0.5rem;
+    max-height: calc(100vh - 1rem);
+  }
+  
+  /* Mobile search input optimizations */
+  .search-input-container {
+    position: relative;
+  }
+  
+  .search-input-container input {
+    padding-left: 3rem !important;
+    padding-right: 1rem !important;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .search-input-container .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 10;
   }
 }
 
@@ -86,6 +177,63 @@ input,
 select,
 textarea {
   transition: all 0.2s ease-in-out;
+}
+
+/* Placeholder styling - ensure all placeholders are gray */
+::placeholder {
+  color: #9ca3af !important; /* gray-400 */
+  opacity: 1;
+}
+
+::-webkit-input-placeholder {
+  color: #9ca3af !important; /* gray-400 */
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  color: #9ca3af !important; /* gray-400 */
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #9ca3af !important; /* gray-400 */
+  opacity: 1;
+}
+
+:-moz-placeholder {
+  color: #9ca3af !important; /* gray-400 */
+  opacity: 1;
+}
+
+/* Focus state placeholder styling */
+input:focus::placeholder,
+textarea:focus::placeholder {
+  color: #d1d5db !important; /* gray-300 - lighter when focused */
+  opacity: 0.7;
+}
+
+input:focus::-webkit-input-placeholder,
+textarea:focus::-webkit-input-placeholder {
+  color: #d1d5db !important; /* gray-300 - lighter when focused */
+  opacity: 0.7;
+}
+
+input:focus::-moz-placeholder,
+textarea:focus::-moz-placeholder {
+  color: #d1d5db !important; /* gray-300 - lighter when focused */
+  opacity: 0.7;
+}
+
+input:focus:-ms-input-placeholder,
+textarea:focus:-ms-input-placeholder {
+  color: #d1d5db !important; /* gray-300 - lighter when focused */
+  opacity: 0.7;
+}
+
+input:focus:-moz-placeholder,
+textarea:focus:-moz-placeholder {
+  color: #d1d5db !important; /* gray-300 - lighter when focused */
+  opacity: 0.7;
 }
 
 /* Better touch targets for mobile */

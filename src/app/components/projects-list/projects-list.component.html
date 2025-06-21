@@ -9,9 +9,9 @@
   </div>
 
   <div class="flex flex-col md:flex-row gap-4 sm:gap-6 mb-6 sm:mb-8">
-    <div class="flex-1 relative">
-      <div class="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
-        <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex-1 relative search-input-container">
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none search-icon">
+        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
       </div>
@@ -20,7 +20,7 @@
         [(ngModel)]="searchTerm"
         (input)="filterProjects()"
         placeholder="Search projects by name, description, or leader..."
-        class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base">
+        class="w-full pl-12 pr-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base">
     </div>
   </div>
 
@@ -98,7 +98,7 @@
     </table>
   </div>
 
-  <div *ngIf="!loading && filteredProjects.length > 0" class="flex justify-center items-center mt-6">
+  <div *ngIf="!loading && filteredProjects.length > 0 && totalPages > 1" class="flex justify-center items-center mt-6">
     <div class="flex flex-wrap justify-center items-center gap-1 sm:gap-2 max-w-full">
       <button (click)="prevPage()" [disabled]="currentPage === 1" class="px-2 sm:px-3 py-1 sm:py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 disabled:opacity-50 text-sm sm:text-base min-w-[40px] sm:min-w-[48px]">Prev</button>
       
@@ -125,9 +125,9 @@
   </div>
 
   <div *ngIf="showDeleteModal" 
-       class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+       class="modal-overlay"
        (click)="closeDeleteModal()">
-    <div class="bg-white rounded-xl p-6 sm:p-8 max-w-md w-full mx-4 transform transition-all duration-300"
+    <div class="modal-content"
          (click)="$event.stopPropagation()">
       <div class="text-center">
         <div class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
