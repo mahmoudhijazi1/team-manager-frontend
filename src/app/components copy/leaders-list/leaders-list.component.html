@@ -1,0 +1,64 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-3">Team Leaders</h1>
+        <p class="text-lg text-gray-600">Manage your team leadership structure</p>
+    </div>
+
+    <div *ngIf="loading" class="flex justify-center items-center py-20">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-500">Loading leaders...</p>
+        </div>
+    </div>
+
+    <div *ngIf="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div *ngFor="let leader of leaders"
+            class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+
+            <div class="p-6 relative">
+                <button (click)="deleteLeader(leader.id)"
+                    class="absolute top-4 right-4 w-8 h-8 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600 flex items-center justify-center text-sm font-bold">
+                    ×
+                </button>
+
+                <div class="flex items-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg mr-4">
+                        {{ leader.name.charAt(0).toUpperCase() }}
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">{{ leader.name }}</h3>
+                        <p class="text-sm text-gray-500">{{ leader.email }}</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mb-6">
+                    <div class="flex items-center">
+                        <span class="text-lg mr-2">👥</span>
+                        <span class="font-semibold text-gray-700">{{ leader.team_name }}</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center bg-gray-50 rounded-lg p-3">
+                        <div class="text-2xl font-bold text-gray-800">{{ leader.workers?.length || 0 }}</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide font-medium">Workers</div>
+                    </div>
+                    <div class="text-center bg-gray-50 rounded-lg p-3">
+                        <div class="text-2xl font-bold text-gray-800">{{ leader.projects?.length || 0 }}</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide font-medium">Projects</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!loading && leaders.length === 0" class="text-center py-20">
+        <div class="text-8xl mb-6">👤</div>
+        <h3 class="text-2xl font-bold text-gray-700 mb-3">No team leaders yet</h3>
+        <p class="text-gray-500 mb-6">Get started by adding your first team leader</p>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+            Add Leader
+        </button>
+    </div>
+</div>

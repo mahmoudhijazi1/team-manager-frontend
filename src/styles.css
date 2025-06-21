@@ -1,1 +1,186 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+
+
+/* Fix scrollbar width shift */
+html {
+  overflow-y: scroll; /* Always show vertical scrollbar */
+}
+
+/* Alternative: Use scrollbar-gutter (modern browsers) */
+body {
+  scrollbar-gutter: stable;
+}
+
+/* Optional: Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Ensure minimum touch target size */
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Improve text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 640px) {
+  /* Ensure pagination doesn't overflow */
+  .pagination-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .pagination-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  /* Ensure buttons don't get too small on mobile */
+  .pagination-button {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    touch-action: manipulation;
+  }
+  
+  /* Prevent text wrapping in pagination */
+  .pagination-text {
+    white-space: nowrap;
+  }
+}
+
+/* Improved focus states for better accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for better UX */
+button,
+input,
+select,
+textarea {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 640px) {
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  select,
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Ensure form elements are properly sized */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+  }
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Improved loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Better modal handling on mobile */
+@media (max-width: 640px) {
+  .modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+  
+  /* Ensure modals don't cause horizontal scroll */
+  .modal {
+    padding: 0 1rem;
+  }
+}
+
+/* Improved table responsiveness */
+@media (max-width: 640px) {
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ensure table cells don't wrap unnecessarily */
+  .table-cell {
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  
+  /* Allow some cells to wrap when needed */
+  .table-cell-wrap {
+    white-space: normal;
+    word-break: break-word;
+  }
+}

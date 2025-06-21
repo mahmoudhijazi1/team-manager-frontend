@@ -1,0 +1,94 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-3">Team Members</h1>
+        <p class="text-lg text-gray-600">Manage your workforce and track assignments</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div class="flex flex-col lg:flex-row gap-4">
+            <div class="flex-1">
+                <div class="relative">
+                    <input type="text" placeholder="Search by name or email..." [(ngModel)]="searchTerm"
+                        class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span class="text-gray-400 text-xl">🔍</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-64">
+                <select [(ngModel)]="selectedPosition"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700">
+                    <option value="all">All Positions</option>
+                    <option *ngFor="let position of uniquePositions" [value]="position">
+                        {{ position }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="flex justify-center items-center py-20">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p class="text-gray-500">Loading team members...</p>
+        </div>
+    </div>
+
+    <div *ngIf="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div *ngFor="let worker of filteredWorkers"
+            class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
+
+            <div class="p-6 relative">
+                <button (click)="deleteWorker(worker.id)"
+                    class="absolute top-4 right-4 w-8 h-8 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600 flex items-center justify-center text-sm font-bold">
+                    ×
+                </button>
+
+                <div class="flex items-center mb-6">
+                    <div
+                        class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg mr-4">
+                        {{ worker.name.charAt(0).toUpperCase() }}
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">{{ worker.name }}</h3>
+                        <p class="text-sm text-gray-500">{{ worker.email }}</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 mb-4">
+                    <div class="flex items-center">
+                        <span class="text-lg mr-2">💼</span>
+                        <span class="font-semibold text-gray-700 text-sm">{{ worker.position }}</span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <div class="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Reports to</div>
+                    <div class="font-semibold text-gray-700">{{ worker.leader?.name || 'No leader assigned' }}</div>
+                </div>
+
+                <div class="text-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+                    <div class="text-2xl font-bold text-gray-800">{{ worker.tasks?.length || 0 }}</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-wide font-medium">Active Tasks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!loading && filteredWorkers.length === 0" class="text-center py-20">
+        <div class="text-8xl mb-6">👷</div>
+        <h3 class="text-2xl font-bold text-gray-700 mb-3">
+            <span *ngIf="searchTerm || selectedPosition !== 'all'">No workers match your filters</span>
+            <span *ngIf="!searchTerm && selectedPosition === 'all'">No team members yet</span>
+        </h3>
+        <p class="text-gray-500 mb-6">
+            <span *ngIf="searchTerm || selectedPosition !== 'all'">Try adjusting your search or filters</span>
+            <span *ngIf="!searchTerm && selectedPosition === 'all'">Start by adding your first team member</span>
+        </p>
+        <button *ngIf="!searchTerm && selectedPosition === 'all'"
+            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+            Add Worker
+        </button>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+<div class="p-8">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center">
+        <button (click)="goBack()"
+          class="mr-6 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors duration-300">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <h1 class="text-3xl font-bold text-gray-900">Leader Details</h1>
+      </div>
+      <div class="flex gap-4">
+        <button (click)="editLeader()"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300">
+          Edit Leader
+        </button>
+        <button (click)="openDeleteModal()"
+          class="bg-red-100 hover:bg-red-200 text-red-700 px-6 py-3 rounded-lg font-semibold transition-colors duration-300">
+          Delete Leader
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <div *ngIf="!loading && leader" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Leader Info Card -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+          <div class="text-center mb-8">
+            <div
+              class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+              {{ getInitials(leader.name) }}
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ leader.name }}</h2>
+            <p class="text-gray-600 mb-4">{{ leader.email }}</p>
+            <div class="bg-blue-50 px-6 py-3 rounded-lg">
+              <span class="text-blue-700 font-semibold text-lg">{{ leader.team_name }}</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-6 text-center">
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-3xl font-bold text-gray-900">{{ leader.workers && leader.workers.length || 0 }}</div>
+              <div class="text-sm text-gray-600">Team Members</div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-3xl font-bold text-gray-900">{{ leader.projects && leader.projects.length || 0 }}</div>
+              <div class="text-sm text-gray-600">Active Projects</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Team Members Section -->
+        <div class="bg-white rounded-xl shadow-lg border border-gray-100">
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900">Team Members</h3>
+          </div>
+          <div class="p-6">
+            <div *ngIf="leader.workers && leader.workers.length === 0" class="text-center py-8">
+              <div class="text-gray-400 text-lg mb-2">No team members yet</div>
+              <p class="text-gray-500">This leader doesn't have any workers assigned yet.</p>
+            </div>
+            <div *ngIf="leader.workers && leader.workers.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div *ngFor="let worker of leader.workers"
+                class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <div
+                  class="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center text-white font-bold mr-4">
+                  {{ getInitials(worker.name) }}
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-gray-900">{{ worker.name }}</div>
+                  <div class="text-sm text-gray-600">{{ worker.position }}</div>
+                </div>
+                <!-- <div class="text-sm text-gray-500">{{ worker.tasks && worker.tasks.length || 0 }} tasks</div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="bg-white rounded-xl shadow-lg border border-gray-100">
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900">Projects</h3>
+          </div>
+          <div class="p-6">
+            <div *ngIf="leader.projects && leader.projects.length === 0" class="text-center py-8">
+              <div class="text-gray-400 text-lg mb-2">No projects yet</div>
+              <p class="text-gray-500">This leader doesn't have any projects assigned yet.</p>
+            </div>
+            <div *ngIf="leader.projects && leader.projects.length > 0" class="space-y-4">
+              <div *ngFor="let project of leader.projects"
+                class="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <div class="flex justify-between items-start mb-2">
+                  <h4 class="font-semibold text-gray-900">{{ project.name }}</h4>
+                </div>
+                <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ project.description }}</p>
+                <div class="flex justify-between items-center text-sm text-gray-500">
+                  <!-- <span>{{ project.tasks && project.tasks.length || 0 }} tasks</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && !leader" class="text-center py-16">
+      <div class="text-gray-400 text-lg">Leader not found</div>
+      <p class="text-gray-500 mt-2">The requested leader could not be found.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div *ngIf="showDeleteModal"
+  class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50"
+  (click)="closeDeleteModal()">
+  <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4 transform transition-all duration-300"
+    (click)="$event.stopPropagation()">
+    <div class="text-center">
+      <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+          </path>
+        </svg>
+      </div>
+
+      <h3 class="text-xl font-bold text-gray-900 mb-4">Delete Leader</h3>
+      <p class="text-gray-600 mb-8">
+        Are you sure you want to delete <strong>{{ leader?.name }}</strong>?
+        This action cannot be undone and will affect all associated workers and projects.
+      </p>
+
+      <div class="flex gap-4">
+        <button (click)="closeDeleteModal()"
+          class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-300">
+          Cancel
+        </button>
+        <button (click)="confirmDelete()" [disabled]="deleting"
+          class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 disabled:opacity-50">
+          <span *ngIf="!deleting">Delete</span>
+          <span *ngIf="deleting" class="flex items-center justify-center">
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+            Deleting...
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
